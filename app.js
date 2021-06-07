@@ -85,6 +85,7 @@
         }
 
         return {
+            species: 'Human',
             name: name,
             heightFeet: heightFeet,
             heightInch: heightInch,
@@ -109,13 +110,29 @@
                 }
     
                 const human = Human(h.name, h.feet, h.inches, h.weight, h.diet);
-                d.table(human);
-                d.log(human.height());
             };
         })());
             
     }
-    
+
+    function getImage() {
+        d.table(this);
+        const species = this.species;
+        d.log(`species = ${species}`);
+        const imageName = `${species.toLowerCase()}.png`;
+        const imagePath = `image/${imageName}`;
+        return imagePath;
+    }
+   
+    function getRandomFacts(numberOfFacts = 3) {
+        const attributes = ['where', 'when', 'fact', 'height', 'weight', 'diet'];
+        // Shuffle array
+        const shuffled = attributes.sort(() => 0.5 - Math.random());
+
+        // Get sub-array of first n elements after shuffled
+        const selected = shuffled.slice(0, numberOfFacts);
+        return selected;
+    }
 
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
