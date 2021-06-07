@@ -1,8 +1,52 @@
 
+    const d = (function () {
+        const debug = true;
+    
+        function log(message) {
+            if (debug) {
+                console.log(message)
+            }
+        }
+
+        function group(groupName = 'default') {
+            console.group(groupName);
+        }
+
+        function groupEnd() {
+            console.groupEnd();
+        }
+    
+        return {
+            log: log,
+            group: group,
+            groupEnd: groupEnd
+        };
+    })();
     // Create Dino Constructor
 
+    function test() {
+        return true;
+    }
+
+    function Dinos() {
+        const dinos = dinoData['Dinos'];
+        
+        return {
+            getSpeciesList: function () {
+                return dinos.map((item) => item.species);                        
+            },
+            getDinos: function() {
+                return dinos;
+            }
+        }
+
+    }
 
     // Create Dino Objects
+
+    function getDinos(speciesArray) {
+        const result = dinos.getDinos();
+    }
 
 
     // Create Human Object
@@ -30,3 +74,9 @@
 
 
 // On button click, prepare and display infographic
+
+// test
+const dinos = Dinos()
+d.group();
+d.log(dinos.getSpeciesList());
+
