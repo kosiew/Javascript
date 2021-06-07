@@ -1,4 +1,4 @@
-{
+const dinoData = {
     "Dinos": [
         {
             "species": "Triceratops",
@@ -73,4 +73,4 @@
             "fact": "All birds are living dinosaurs."
         }
     ]
-}
+};
