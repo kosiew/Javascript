@@ -1,12 +1,9 @@
-const { test } = QUnit;
+const { test: qtest } = QUnit;
 
 QUnit.module( "Group A" );
 
 const dinos = Dinos().getDinos();
 
-test( "basic test example", assert => {
-  assert.true( true, "this is fine" );
-});
-test( "basic test example 2", assert => {
-  assert.true( true, "this is also fine" );
-});
+qtest( "dino count", assert => {
+    assert.equal(dinos.length, 8, 'wrong dino count');
+})

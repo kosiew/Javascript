@@ -9,17 +9,29 @@
         }
 
         function group(groupName = 'default') {
-            console.group(groupName);
+            if (debug) {
+                console.group(groupName);
+            }
         }
 
         function groupEnd() {
-            console.groupEnd();
+            if (debug) {
+                console.groupEnd();
+            }
         }
-    
+
+        function table(obj) {
+            if (debug) {
+                console.table(obj);
+            }
+        }
+            
         return {
             log: log,
             group: group,
-            groupEnd: groupEnd
+            groupEnd: groupEnd,
+            table: table
+
         };
     })();
     // Create Dino Constructor
@@ -37,9 +49,15 @@
             },
             getDinos: function() {
                 return dinos;
+            },
+            getDino: function(species) {
+                for (const dino of dinos) {
+                    if (dino.species == species) {
+                        return dino;
+                    }
+                }
             }
         }
-
     }
 
     // Create Dino Objects
@@ -48,11 +66,56 @@
         const result = dinos.getDinos();
     }
 
-
     // Create Human Object
 
+    function sanitizeNumber(a_string) {
+        try {
+            return parseInt(a_string);
+        } catch (e) {
+        
+        }
+        return parseInt(string);
+    }
+
+
+    function Human(name, heightFeet, heightInch, weight, diet) {
+
+        function computeHeight(feet, inch) {
+            return sanitizeNumber(feet) * 12 + sanitizeNumber(inch);
+        }
+
+        return {
+            name: name,
+            heightFeet: heightFeet,
+            heightInch: heightInch,
+            height: function() {
+                return computeHeight(heightFeet, heightInch);
+            },
+            weight: weight,
+            diet: diet
+        }
+    }
     // Use IIFE to get human data from form
 
+    const btn = document.getElementById('btn');
+
+    if (btn != null) {
+        btn.addEventListener('click', (function() {
+            return function() {
+                const formData = new FormData(document.getElementById('dino-compare'));
+                const h = {}
+                for (const pair of formData.entries()) {
+                    h[pair[0]] = pair[1];
+                }
+    
+                const human = Human(h.name, h.feet, h.inches, h.weight, h.diet);
+                d.table(human);
+                d.log(human.height());
+            };
+        })());
+            
+    }
+    
 
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
@@ -74,9 +137,3 @@
 
 
 // On button click, prepare and display infographic
-
-// test
-const dinos = Dinos()
-d.group();
-d.log(dinos.getSpeciesList());
-
