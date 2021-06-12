@@ -2,8 +2,8 @@ const { test: qtest } = QUnit;
 
 QUnit.module( "Group A" );
 
-const _dinos = Dinos()
-const dinos = _dinos.getDinos();
+const _dinos = Dinos();
+const testDinos = _dinos.getDinos();
 const pigeon = _dinos.getDino('Pigeon');
 
 qtest( "dino count", assert => {
@@ -31,12 +31,12 @@ qtest( 'getSpeciesList', assert => {
     assert.deepEqual(speciesList, expectedList, 'wrong list');
 });
 
-qtest( 'test Human factory', assert => {
-    const human = Human('name', 12, 13, 14, 'Omnivor');
+qtest( 'test Human constructor', assert => {
+    const human = new Human('name', 12, 13, 14, 'Omnivor');
     assert.equal(human.name, 'name', 'name');
     assert.equal(human.weight, '14', 'weight');
     assert.equal(human.diet, 'Omnivor', 'diet');
-    assert.equal(human.height(), 157, 'height');
+    assert.equal(human.height, 157, 'height');
 });
 
 qtest( 'getImage', assert => {
@@ -51,4 +51,12 @@ qtest( 'getRandomFacts', assert => {
     assert.true(list1.length == list2.length, 'same length of list');
     const  intersection = list1.filter(x => list2.includes(x));
     assert.true(intersection.length < list1.length, 'duplicate list');
+});
+
+qtest('compareToDinos', assert => {
+    const compares = [compareDiet, compareHeight, compareWeight];
+    const human = new Human('name', 12, 1, 10, 'carnivor' );
+    const results = compareToDinos(human, dinos, compares);
+    const expectedResults = {};
+    assert.deepEqual(results, expectedResults, 'failed compareToDinos');
 });
